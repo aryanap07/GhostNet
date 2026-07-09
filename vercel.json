@@ -1,20 +1,26 @@
 {
   "version": 2,
-  "services": {
-    "backend": {
-      "root": "backend/",
-      "framework": "fastapi",
-      "entrypoint": "main:app"
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
-  },
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/api/$1"
+      "destination": "api/index.py"
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/$1"
     }
   ]
 }
