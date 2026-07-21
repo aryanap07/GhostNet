@@ -16,7 +16,9 @@ import {
   ArrowLeft,
   Server,
   Volume2,
-  VolumeX
+  VolumeX,
+  Cpu,
+  Fingerprint
 } from 'lucide-react';
 import GhostCharacter from './components/GhostCharacter';
 import TrustScore from './components/TrustScore';
@@ -437,6 +439,61 @@ export default function App() {
               >
                 Unencrypted URL
               </button>
+            </div>
+            {/* How it Works / Behind the Veil */}
+            <div className="w-full max-w-4xl mt-20 border-t border-zinc-900 pt-10 text-left">
+              <h3 className="text-sm font-semibold tracking-widest text-slate-400 uppercase flex items-center justify-center gap-2 mb-8 text-center">
+                Behind the Veil: How GhostNet Scans
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="glass-panel p-5 rounded-2xl bg-zinc-950/20 border border-zinc-900 hover:border-zinc-800 transition-all flex flex-col gap-3 group">
+                  <div className="w-8 h-8 rounded-lg bg-blue-950/30 border border-blue-900/50 flex items-center justify-center text-blue-400 group-hover:bg-blue-950/50 group-hover:border-blue-700/50 transition-all">
+                    <Server className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">1. Technical Check</h4>
+                    <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                      Resolves connection protocols, checks SSL certificate handshake validity, and validates active HTTPS configurations.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="glass-panel p-5 rounded-2xl bg-zinc-950/20 border border-zinc-900 hover:border-zinc-800 transition-all flex flex-col gap-3 group">
+                  <div className="w-8 h-8 rounded-lg bg-purple-950/30 border border-purple-900/50 flex items-center justify-center text-purple-400 group-hover:bg-purple-950/50 group-hover:border-purple-700/50 transition-all">
+                    <Fingerprint className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">2. Heuristics</h4>
+                    <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                      Scans hostnames and URL parameters for suspicious keywords, typosquatting variants, and brand impersonation patterns.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="glass-panel p-5 rounded-2xl bg-zinc-950/20 border border-zinc-900 hover:border-zinc-800 transition-all flex flex-col gap-3 group">
+                  <div className="w-8 h-8 rounded-lg bg-amber-950/30 border border-amber-900/50 flex items-center justify-center text-amber-400 group-hover:bg-amber-950/50 group-hover:border-amber-700/50 transition-all">
+                    <Globe className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">3. Registry DB</h4>
+                    <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                      Queries live RDAP databases to fetch the registration age, registrar info, and domain creation date.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="glass-panel p-5 rounded-2xl bg-zinc-950/20 border border-zinc-900 hover:border-zinc-800 transition-all flex flex-col gap-3 group">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-950/30 border border-emerald-900/50 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-950/50 group-hover:border-emerald-700/50 transition-all">
+                    <Cpu className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider">4. AI Synthesis</h4>
+                    <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                      Leverages Gemini API to translate telemetry metrics into a smart trust score, plain-English summary, and safety guidelines.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* SCAN HISTORY TABLE */}
