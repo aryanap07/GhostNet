@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { ChevronRight, ShieldAlert, ShieldCheck, Play, RotateCcw } from 'lucide-react';
+import { ShieldAlert, ShieldCheck, Play, RotateCcw } from 'lucide-react';
 
 interface ConsequenceStep {
   step: string;
-  description: str;
+  description: string;
   risk: string;
 }
 
@@ -24,13 +24,6 @@ export const ConsequenceVisualizer: React.FC<ConsequenceVisualizerProps> = ({
     setSimulationRunning(false);
   };
 
-  const nextStep = () => {
-    if (activeStep < consequences.length - 1) {
-      setActiveStep(prev => prev + 1);
-    } else {
-      setSimulationRunning(false);
-    }
-  };
 
   const runSimulation = () => {
     resetSimulation();
