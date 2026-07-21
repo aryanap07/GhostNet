@@ -104,9 +104,9 @@ def generate_fallback_analysis(data: dict) -> dict:
         )
         explanation = f"This domain ({domain}) is active and uses a secure connection (HTTPS). No obvious phishing keywords, lookalikes, or deceptive structures were found in the URL. It is likely safe for standard browsing."
         recs = [
-            "आप इस वेबसाइट पर सुरक्षित रूप से ब्राउज़ कर सकते हैं।",
-            "पासवर्ड डालने से पहले सत्यापित करें कि आप सही डोमेन पर हैं।",
-            "अपने ब्राउज़र को अपडेट रखें।"
+            "You can safely browse this website.",
+            "Verify that you are on the correct domain before entering any passwords.",
+            "Keep your browser updated to the latest version."
         ]
     elif base_score >= 70:
         risk_level = "Low Risk"
@@ -122,9 +122,9 @@ def generate_fallback_analysis(data: dict) -> dict:
         )
         explanation = f"Although the website uses a secure connection, there are small warnings, such as a relatively new domain registration or uncommon domain sub-structures. Exercise standard caution."
         recs = [
-            "एड्रेस बार में डोमेन नाम की स्पेलिंग चेक करें।",
-            "किसी नए पेज पर संवेदनशील विवरण साझा न करें।",
-            "यदि साइट पर सत्यापित ट्रस्ट मार्क नहीं हैं, तो क्रेडिट कार्ड विवरण साझा करने से बचें।"
+            "Check the spelling of the domain name in the address bar.",
+            "Avoid sharing sensitive details on any newly visited page.",
+            "Do not input credit card details if the site lacks verified trust marks."
         ]
     elif base_score >= 45:
         risk_level = "Medium Risk"
@@ -140,9 +140,9 @@ def generate_fallback_analysis(data: dict) -> dict:
         )
         explanation = f"This domain has elements commonly associated with deceptive sites. It may lack HTTPS encryption or contain suspicious keywords in the path. Be extremely careful before entering passwords."
         recs = [
-            "क्रेडेंशियल या व्यक्तिगत डेटा दर्ज करने से बचें।",
-            "इस पेज पर भुगतान या क्रेडिट कार्ड लेनदेन बिल्कुल न करें।",
-            "इंटरनेट पर इस वेबसाइट की समीक्षाएं खोजें।"
+            "Avoid entering credentials or any personal data.",
+            "Do not perform payments or credit card transactions on this page.",
+            "Search for reviews of this website online."
         ]
     elif base_score >= 25:
         risk_level = "High Risk"
@@ -158,9 +158,9 @@ def generate_fallback_analysis(data: dict) -> dict:
         )
         explanation = f"The URL matches patterns frequently used in phishing campaigns, such as deceptive subdomains or suspicious brand keywords. It was likely set up to mimic a legitimate organization."
         recs = [
-            "इस वेबसाइट को अभी के अभी छोड़ दें।",
-            "किसी लिंक, बैनर या पॉप-अप पर क्लिक न करें।",
-            "यदि आपने पासवर्ड डाल दिया है, तो वास्तविक साइट पर जाकर इसे तुरंत बदलें।"
+            "Leave this website immediately.",
+            "Do not click on any links, banners, or pop-ups.",
+            "If you have already entered a password, change it immediately on the legitimate site."
         ]
     else:
         risk_level = "Critical"
@@ -176,9 +176,9 @@ def generate_fallback_analysis(data: dict) -> dict:
         )
         explanation = f"This site lacks basic security standards, uses an unverified or IP-based hostname, and shows critical threat patterns. It is highly likely to be a scam, malware hub, or aggressive phishing page."
         recs = [
-            "ब्राउज़र टैब को तुरंत बंद कर दें।",
-            "अपने सिस्टम का फुल वायरस स्कैन चलाएं।",
-            "समर्थन नंबरों या सुरक्षा अलर्टों पर बिल्कुल भी कॉल न करें।"
+            "Close the browser tab immediately.",
+            "Run a full virus scan on your system.",
+            "Do not call any support numbers or click on safety alerts displayed on the site."
         ]
 
     # Construct consequences dynamically based on URL, domain, patterns and trust score
@@ -327,7 +327,7 @@ async def get_ai_explanation(analysis_data: dict) -> dict:
             "'मैंने इस वेबसाइट को एक्सप्लोर किया है।' and addressing domain age, connection security, and what happens if they continue.\n"
             "2. 'ghost_summary_en': written in standard ENGLISH starting with: "
             "'I explored this website before you.' and addressing domain age, connection security, and what happens if they continue.\n\n"
-            "Keep the language clean, trustworthy, and modern.\n"
+            "Keep the language clean, trustworthy, and modern. Ensure that 'recommendations' are written strictly in standard English.\n"
             "You MUST output your response in valid JSON matching the exact schema specified below."
         )
         
@@ -374,7 +374,7 @@ async def get_ai_explanation(analysis_data: dict) -> dict:
         3. "ghost_summary": A detailed speech paragraph written in clear, conversational HINDI (using Devanagari script) starting with "मैंने इस वेबसाइट को एक्सप्लोर किया है।" that explicitly covers when the website was made/registered, why it is safe or dangerous, and what will happen if the user continues.
         4. "ghost_summary_en": A detailed speech paragraph written in standard ENGLISH starting with "I explored this website before you." that explicitly covers when the website was made/registered, why it is safe or dangerous, and what will happen if the user continues.
         5. "ai_explanation": A concise, friendly explanation of why the website has this risk status. Explain terms like 'HTTPS' or 'domain age' simply if they are relevant to your reasoning.
-        6. "recommendations": An array of 2 to 4 friendly, actionable safety tips.
+        6. "recommendations": An array of 2 to 4 friendly, actionable safety tips in standard English.
         7. "consequences": An array of 3 to 5 steps showing what could happen if they continue. Each step must be an object with:
            - "step": Brief title (e.g. "1. Visit Website", "2. Enter Credentials")
            - "description": Explanation of the user action or attack step (e.g. "The page steals your login info.")

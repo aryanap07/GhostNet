@@ -16,10 +16,7 @@ import {
   ArrowLeft,
   Server,
   Volume2,
-  VolumeX,
-  Terminal,
-  Eye,
-  Code
+  VolumeX
 } from 'lucide-react';
 import GhostCharacter from './components/GhostCharacter';
 import TrustScore from './components/TrustScore';
@@ -852,115 +849,6 @@ export default function App() {
 
             </div>
 
-            {/* Row: DOM Crawler Inspector Panel */}
-            {scanResult.crawled_page_content && (
-              <div className="glass-panel p-6 rounded-2xl bg-black/40 border border-zinc-900 space-y-4 my-6">
-                <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2 border-b border-zinc-900 pb-3">
-                  <Terminal className="w-4 h-4 text-purple-400" />
-                  Ghost AI Sandbox DOM Crawler Report
-                </h3>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Left: Interactive Bot Logs (Terminal style) */}
-                  <div className="bg-black/80 rounded-xl p-4 border border-zinc-900 font-mono text-[11px] text-slate-400 space-y-2 max-h-[220px] overflow-y-auto">
-                    <div className="text-slate-500">// Initialize Virtual Sandbox crawler</div>
-                    <div className="text-green-500 font-semibold">&gt; [info] Crawler session initialized in memory.</div>
-                    <div className="text-green-500 font-semibold">&gt; [info] Simulating standard secure browser environment.</div>
-                    <div className="text-green-500 font-semibold">&gt; [info] Navigating to {scanResult.url}</div>
-                    <div className="text-green-500 font-semibold">&gt; [info] Document parsed successfully ({scanResult.domain}).</div>
-                    <div className="text-purple-400">&gt; [DOM] Found {scanResult.crawled_page_content.forms_count} form(s) and {scanResult.crawled_page_content.input_fields.length} input(s).</div>
-                    {scanResult.crawled_page_content.has_password_field ? (
-                      <div className="text-red-400 font-bold animate-pulse">&gt; [warning] SENSITIVE FORM DETECTED: Password field found!</div>
-                    ) : (
-                      <div className="text-green-400">&gt; [info] No password input fields found.</div>
-                    )}
-                    {scanResult.crawled_page_content.has_card_field && (
-                      <div className="text-red-400 font-bold animate-pulse">&gt; [warning] BILLING DETECTED: Credit card/payment inputs found!</div>
-                    )}
-                    {scanResult.crawled_page_content.external_scripts.length > 0 ? (
-                      <div className="text-amber-400">&gt; [security] Scanned {scanResult.crawled_page_content.external_scripts.length} external third-party script(s).</div>
-                    ) : (
-                      <div className="text-green-400">&gt; [security] No third-party external scripts loaded.</div>
-                    )}
-                    {scanResult.crawled_page_content.subpages_scanned && scanResult.crawled_page_content.subpages_scanned.length > 0 && (
-                      <div className="text-purple-400">&gt; [link-follow] Followed subpages: {scanResult.crawled_page_content.subpages_scanned.join(", ")}</div>
-                    )}
-                    <div className="text-green-500 font-semibold">&gt; [status] DOM crawling complete. Threat report compiled.</div>
-                  </div>
-
-                  {/* Right: Crawled Metadata & Elements */}
-                  <div className="space-y-4">
-                    {/* Header summary of DOM elements */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-zinc-950/40 p-3 rounded-xl border border-zinc-900/60">
-                        <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Page Title</div>
-                        <div className="text-xs font-semibold text-slate-200 mt-1 truncate" title={scanResult.crawled_page_content.title || "No Title Specified"}>
-                          {scanResult.crawled_page_content.title || "No Title Specified"}
-                        </div>
-                      </div>
-                      <div className="bg-zinc-950/40 p-3 rounded-xl border border-zinc-900/60">
-                        <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Form Action Security</div>
-                        <div className="text-xs font-semibold mt-1">
-                          {scanResult.crawled_page_content.has_password_field || scanResult.crawled_page_content.has_card_field ? (
-                            scanResult.https_enabled ? (
-                              <span className="text-green-400 flex items-center gap-1">
-                                <Lock className="w-3.5 h-3.5" /> Encrypted
-                              </span>
-                            ) : (
-                              <span className="text-red-400 flex items-center gap-1 animate-pulse">
-                                <Unlock className="w-3.5 h-3.5" /> Insecure HTTP
-                              </span>
-                            )
-                          ) : (
-                            <span className="text-slate-400">No Login/Billing Forms</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Detected Inputs */}
-                    <div className="bg-zinc-950/20 p-3.5 rounded-xl border border-zinc-900 space-y-2">
-                      <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <Code className="w-3.5 h-3.5 text-blue-400" />
-                        Detected Inputs ({scanResult.crawled_page_content.input_fields.length})
-                      </div>
-                      <div className="flex flex-wrap gap-1.5 max-h-[70px] overflow-y-auto pr-1">
-                        {scanResult.crawled_page_content.input_fields.length === 0 ? (
-                          <span className="text-xs text-slate-500 italic">No input tags scanned</span>
-                        ) : (
-                          scanResult.crawled_page_content.input_fields.map((inp, idx) => (
-                            <span key={idx} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-slate-300">
-                              {inp}
-                            </span>
-                          ))
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Third-party Scripts */}
-                    <div className="bg-zinc-950/20 p-3.5 rounded-xl border border-zinc-900 space-y-2">
-                      <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                        <Eye className="w-3.5 h-3.5 text-amber-400" />
-                        External Third-Party Scripts
-                      </div>
-                      <div className="space-y-1.5 max-h-[70px] overflow-y-auto pr-1">
-                        {scanResult.crawled_page_content.external_scripts.length === 0 ? (
-                          <div className="text-xs text-green-400 flex items-center gap-1">
-                            <CheckCircle2 className="w-3.5 h-3.5" /> Clean script origins
-                          </div>
-                        ) : (
-                          scanResult.crawled_page_content.external_scripts.map((src, idx) => (
-                            <div key={idx} className="text-[10px] font-mono text-red-400 truncate border-b border-zinc-900/60 pb-1" title={src}>
-                              &gt; {src}
-                            </div>
-                          ))
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
 
 
 
