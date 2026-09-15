@@ -22,3 +22,7 @@ A lightweight web security analysis tool for evaluating URLs through crawling, n
 git clone <repository-url>
 cd GhostNet
 pip install -r requirements.txt
+```
+## License
+
+MIT License: [LICENSE](https://opensource.org/license/mit/)
